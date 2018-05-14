@@ -1,0 +1,37 @@
+* Fleet
+
+Deploy purescript modules as http backed microservices.
+
+** `deployment-spec.yaml`
+
+Specify the purescript modules to be made as microservices.
+
+#+NAME: deployment-spec-example
+#+BEGIN_SEC yaml
+application: my-application
+services:
+  - name: ServiceA
+    type: api
+    configuration:
+      host: 127.0.0.1
+      port: 8081
+  - name: ServiceB
+    type: api
+    configuration:
+      host: 127.0.0.1
+      port: 8080
+#+END_SRC
+
+** What it does
+
+*** _build/util-services.yaml
+
+Set of deployments and services for telegraf, influxdb and grafana for basic metrics.
+
+*** _build/deployment-spec.yaml
+
+Kubernetes yaml specification that creates a deployment for modules marked in `deployment-spec.yaml`.
+
+*** Service specific docker files
+
+For each module to be deployed as a server a dockerfile is created.

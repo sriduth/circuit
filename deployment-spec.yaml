@@ -1,0 +1,73 @@
+application: my-application
+defaults: import './default-configs.yaml'
+services:
+  - name: ServiceA
+    type: api
+    configuration:
+      host: 127.0.0.1
+      port: 8081
+      threads: 20
+          
+  - name: ServiceB
+    type: api
+    configuration:
+      host: 127.0.0.1
+      port: 8080
+      threads: 20
+
+  - name: ServiceComm
+    type: api
+    configuration:
+      host: 127.0.0.1
+      port: 8082
+
+      
+  - name: OrderService
+    type: module
+
+    authentication:
+      provider:
+        - name: AuthProviderModule
+
+    function-call-lb:
+      - 'getOrderDetails':
+          key:
+            index-of-argument: 1
+            argument-name: merchant_id
+
+    rpc:
+      - 'getOrderDetails':
+          endpoint: http://test.org
+      
+    caching:
+      - 'getOrderDetails':
+          generate-key-using:
+            - position: 1pp
+              name: merchant_id
+            - position: 2
+              name: order_id
+          time: 120.00
+
+      - 'getTransactionsForOrder':
+          time: 120.00
+
+    logging:
+      - 'getOrderDetails':
+          arguments:
+            - papertrail
+            - file
+          return:
+            - papertrail
+            - file
+    metrics:
+      - 'getOrderDetails':
+          - counter
+          - latency
+   
+    hystrix:
+      - 'getOrderDetails':
+          latency:
+            exceeds: 25s
+          call-count:
+            exceeds: '~1000'
+          
