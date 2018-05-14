@@ -1,6 +1,30 @@
-* Fleet
+* Circuit
 
-Deploy purescript modules as http backed microservices.
+** Feature roadmap
+
+Automate management of APIs across various aspects:
+1) Infrastructure
+   1) Caching of API calls
+   2) Logging
+   3) Latency metrics
+   4) Circuit breaking
+   5) Request sharding
+2) Analytics
+   1) Logging events
+   2) Pushing to backend systems for log processing
+3) Security
+   1) Auditing API usage
+   2) Constraints on infrastructure:
+      1) Ports 
+      2) Logging
+      3) Auditing
+
+** Managed function call / Seperation of declaration, implementation and invocation of function / AOP
+
+By allowing the framework to perform the function of applying a function to its arguments, 
+the framework can apply functionality specific to various aspects (or buisiness verticals / departments)
+greatly reducing fiction between multiple groups with any stake in the final product.
+
 
 ** `deployment-spec.yaml`
 
